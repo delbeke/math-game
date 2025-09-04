@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Whiz! - Play!</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container game-container">
+        <div id="game-header">
+            <div><span data-i18n="player">Player:</span> <span id="player-name"></span></div>
+            <div><span data-i18n="high_score">High Score:</span> <span id="high-score">0</span></div>
+            <div><span data-i18n="score">Score:</span> <span id="score">0</span></div>
+        </div>
+
+        <div class="timer-container">
+             <div id="timer-bar"></div>
+        </div>
+        <div class="time-display"><span data-i18n="time_left">Time Left:</span> <span id="time-left"></span><span id="seconds-suffix" data-i18n="seconds_suffix">s</span></div>
+
+
+        <div id="game-area">
+            <div id="problem">
+                <span id="num1"></span>
+                <span id="operator"></span>
+                <span id="num2"></span>
+                <span>=</span>
+            </div>
+            <input type="number" id="answer-input" autofocus autocomplete="off">
+            <p class="instructions" data-i18n="type_answer">Type the answer and press Enter</p>
+        </div>
+
+        <div id="game-over" class="hidden">
+            <h2 data-i18n="times_up">Time's Up!</h2>
+            <span id="final-player-name" class="hidden"></span>
+            <p id="well-done"></p>
+            <p data-i18n="your_final_score_is">Your final score is:</p>
+            <p id="final-score" class="score-display"></p>
+            <p id="new-highscore-message" class="hidden" data-i18n="new_high_score">🎉 New High Score! 🎉</p>
+            <div class="game-over-buttons">
+                <button id="restart-btn" data-i18n="try_same_settings">Try Same Settings</button>
+                <a href="index.html" class="btn" data-i18n="change_settings">Change Settings</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="translations.js"></script>
+    <script>
+        (function(){
+            const params = new URLSearchParams(window.location.search);
+            const langParam = params.get('lang');
+            if (window.I18N) {
+                if (langParam) {
+                    I18N.setLang(langParam);
+                } else {
+                    I18N.applyTranslations(document);
+                }
+            }
+
+            // Keep <html lang> in sync
+            try { document.documentElement.setAttribute('lang', (window.I18N && I18N.getCurrentLang()) || 'en'); } catch(_) {}
+
+            // When the player's name is filled at game over, render the i18n message
+            document.addEventListener('DOMContentLoaded', function(){
+                const nameEl = document.getElementById('final-player-name');
+                const wellDoneEl = document.getElementById('well-done');
+                if (!nameEl || !wellDoneEl || !window.I18N) return;
+
+                const observer = new MutationObserver(function(){
+                    const name = nameEl.textContent || '';
+                    if (name) {
+                        wellDoneEl.textContent = I18N.t('well_done_name', { name: name });
+                    }
+                });
+                observer.observe(nameEl, { childList: true, characterData: true, subtree: true });
+            });
+        })();
+    </script>
+    <script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="app_title">Math Whiz!</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <h1 data-i18n="app_title">Math Whiz!</h1>
+        <p data-i18n="setup_subtitle">Let's get ready to practice!</p>
+        <div class="form-group">
+            <label for="lang" data-i18n="settings_language">Language:</label>
+            <select id="lang" name="lang">
+                <option value="en">English</option>
+                <option value="nl">Nederlands</option>
+                <option value="fr">Français</option>
+            </select>
+        </div>
+        <form action="game.html" method="GET">
+            <div class="form-group">
+                <label for="name" data-i18n="your_name">Your Name:</label>
+                <input type="text" id="name" name="name" placeholder="Super Coder" required data-i18n="name_placeholder" data-i18n-placeholder="true">
+            </div>
+
+            <div class="form-group">
+                <label for="type" data-i18n="choose_challenge">Choose your challenge:</label>
+                <select id="type" name="type">
+                    <option value="add" data-i18n="addition">Addition (+)</option>
+                    <option value="subtract" data-i18n="subtraction">Subtraction (-)</option>
+                    <option value="multiply" data-i18n="multiplication">Multiplication (×)</option>
+                    <option value="divide" data-i18n="division">Division (÷)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="max" data-i18n="highest_number">Highest number to use:</label>
+                <input type="number" id="max" name="max" min="10" max="1000" value="20" required>
+            </div>
+
+            <div class="form-group">
+                <label for="duration" data-i18n="time_seconds">Time (in seconds):</label>
+                <input type="number" id="duration" name="duration" min="10" max="180" value="60" required>
+            </div>
+
+            <button type="submit" class="btn-start" data-i18n="start_game">Start Game!</button>
+        </form>
+    </div>
+
+    <script src="translations.js"></script>
+    <script>
+        (function() {
+            const STORAGE_KEY = 'mathWhizLastSettings';
+
+            // Prefill form from localStorage if available
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                try {
+                    const s = JSON.parse(saved);
+                    if (s && typeof s === 'object') {
+                        if (s.name) document.getElementById('name').value = s.name;
+                        if (s.type) document.getElementById('type').value = s.type;
+                        if (s.max) document.getElementById('max').value = s.max;
+                        if (s.duration) document.getElementById('duration').value = s.duration;
+                    }
+                } catch (_) {
+                    // ignore parse errors
+                }
+            }
+
+            // Initialize language selector
+            const langSelect = document.getElementById('lang');
+            const currentLang = (window.I18N && I18N.getCurrentLang()) || 'en';
+            langSelect.value = currentLang;
+            if (window.I18N) {
+                I18N.applyTranslations(document);
+            }
+
+            langSelect.addEventListener('change', function(){
+                if (window.I18N) {
+                    I18N.setLang(langSelect.value);
+                }
+            });
+
+            // Save settings on submit
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function() {
+                const settings = {
+                    name: document.getElementById('name').value || 'Player',
+                    type: document.getElementById('type').value || 'add',
+                    max: parseInt(document.getElementById('max').value, 10) || 20,
+                    duration: parseInt(document.getElementById('duration').value, 10) || 60
+                };
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+
+                // Ensure current language is passed to the game via query string for first load
+                try {
+                    const url = new URL(form.action, window.location.origin);
+                    const data = new FormData(form);
+                    const params = new URLSearchParams(data);
+                    params.set('lang', (window.I18N && I18N.getCurrentLang()) || 'en');
+                    form.action = url.pathname + '?' + params.toString();
+                } catch(_) {}
+            });
+        })();
+    </script>
+
+</body>
+</html>
