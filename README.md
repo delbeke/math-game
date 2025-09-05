@@ -56,6 +56,9 @@ Math Whiz! is a web-based application that allows users to practice basic arithm
 - **Timer**: Visual and numerical countdown to create a sense of urgency
 - **Responsive Design**: Flexbox and media queries ensure the game works on various screen sizes
 
+### Images by Vecteezy
+https://www.vecteezy.com/free-vector/sky
+
 ## Customization
 
 ### Adding New Languages
