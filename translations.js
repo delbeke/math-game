@@ -29,8 +29,8 @@
             well_done_name: 'Well done, {name}!',
             your_final_score_is: 'Your final score is:',
             new_high_score: '🎉 New High Score! 🎉',
-            try_same_settings: 'Try Same Settings',
-            change_settings: 'Change Settings'
+            try_same_settings: 'Retry',
+            change_settings: 'Back'
         },
         nl: {
             app_title: 'Rekenkampioen!',
@@ -57,8 +57,8 @@
             well_done_name: 'Goed gedaan, {name}!',
             your_final_score_is: 'Je eindscore is:',
             new_high_score: '🎉 Nieuw record! 🎉',
-            try_same_settings: 'Zelfde instellingen opnieuw',
-            change_settings: 'Instellingen wijzigen'
+            try_same_settings: 'Nog eens!',
+            change_settings: 'Terug'
         },
         fr: {
             app_title: 'As du Calcul !',
@@ -85,7 +85,7 @@
             well_done_name: 'Bravo, {name} !',
             your_final_score_is: 'Ton score final est :',
             new_high_score: '🎉 Nouveau record ! 🎉',
-            try_same_settings: 'Réessayer mêmes réglages',
+            try_same_settings: 'Une fois de plus!',
             change_settings: 'Modifier les réglages'
         }
     };
