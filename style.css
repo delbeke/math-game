@@ -88,6 +88,35 @@ p {
     position: relative;
 }
 
+/* Close button in game container */
+.close-btn {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: #ff6b6b;
+    color: #fff;
+    font-size: 1.6rem;
+    line-height: 36px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: transform 0.15s ease, background-color 0.2s ease;
+}
+
+.close-btn:hover {
+    transform: translateY(-2px);
+    background-color: #ff4d4d;
+}
+
+.close-btn:focus {
+    outline: 3px solid rgba(255, 107, 107, 0.4);
+    outline-offset: 2px;
+}
+
 #game-header {
     display: flex;
     justify-content: space-between;

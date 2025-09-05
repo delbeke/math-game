@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const newHighScoreMessage = document.getElementById('new-highscore-message');
     const restartBtn = document.getElementById('restart-btn');
     const gameContainer = document.querySelector('.game-container');
+    const closeBtn = document.getElementById('close-game');
 
 
     // --- GAME STATE ---
@@ -177,6 +178,11 @@ document.addEventListener('DOMContentLoaded', () => {
     restartBtn.addEventListener('click', () => {
         window.location.reload();
     });
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            window.location.href = '/';
+        });
+    }
 
     // --- START GAME ---
     initializeUI();
